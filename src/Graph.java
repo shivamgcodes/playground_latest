@@ -67,8 +67,7 @@ public class Graph {
     }
 
 
-
-    public ArrayList<Integer> dfs(boolean[] visited, ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfslist, int cur ) {
+    public ArrayList<Integer> dfs(boolean[] visited, ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfslist, int cur) {
         //visited,adjlist , keep returning the latest dfs
         visited[cur] = true;
         dfslist.add(cur);
@@ -109,8 +108,10 @@ public class Graph {
 
             if (visited[adj.get(cur).get(i)]) {
                 if (sonparent.get(cur) != null && !Objects.equals(sonparent.get(cur), adj.get(cur).get(i))) {
-                    if(sonparent.get(adj.get(cur).get(i))== null){return true;}
-                    if ( sonparent.get(adj.get(cur).get(i)) != cur) {
+                    if (sonparent.get(adj.get(cur).get(i)) == null) {
+                        return true;
+                    }
+                    if (sonparent.get(adj.get(cur).get(i)) != cur) {
 
                         return true;         // true means cycle is present
                     }
@@ -136,17 +137,14 @@ public class Graph {
 
         //will we have to keep track of parent if we know that  a graph is completely connected
 
-
-
         boolean[] visited = new boolean[V];
-
         HashMap<Integer, Integer> sonparent = new HashMap<>();
-        boolean result = false;
+
         for (int i = 0; i < V; i++) {
             if (!visited[i]) {
                 boolean b = undirected_cycle_detection_dfs_helper(visited, adj, i, sonparent);
                 if (b) {
-                    return b;
+                    return true;
                 }
             }
         }
@@ -157,6 +155,58 @@ public class Graph {
 
     }
 
+    private boolean directed_cycle_detection_dfs_helper(boolean[] visited, ArrayList<ArrayList<Integer>> adj,
+                                                        int cur, HashMap<Integer, Integer> sonparent, boolean[] dfsvisited) {
+
+        visited[cur] = true;
+        dfsvisited[cur] = true;
+
+        // cur is parent and
+        // adj.get(cur).get(i) is the child
+
+        for (int i = 0; i < adj.get(cur).size(); i++) {
+
+            if (dfsvisited[adj.get(cur).get(i)]) {
+                // System.out.println("cur" + cur + " i " + i);
+                return true;
+            }
+
+
+            if (!visited[adj.get(cur).get(i)]) {
+                // start dfss
+                sonparent.put(adj.get(cur).get(i), cur);
+
+                if (directed_cycle_detection_dfs_helper(visited, adj, adj.get(cur).get(i), sonparent , dfsvisited)) {
+
+                    return true;
+                }
+            }
+
+        }
+        dfsvisited[cur] = false;
+        return false;
+    }
+
+    public boolean directed_cycle_detection_dfs(int V, ArrayList<ArrayList<Integer>> adjlist) {
+
+        boolean[] visited = new boolean[V];
+        HashMap<Integer, Integer> sonparent = new HashMap<>();
+        boolean[] dfsvisited = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                boolean b = directed_cycle_detection_dfs_helper(visited, adjlist, i, sonparent, dfsvisited);
+                if (b) return true;
+            }
+        }
+
+
+        return false;
+    }
+
 }
+   
+
+
 
 
