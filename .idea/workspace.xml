@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3423eb67-b59b-4a64-850d-f6419a711404" name="Changes" comment="" />
+    <list default="true" id="3423eb67-b59b-4a64-850d-f6419a711404" name="Changes" comment="created an algorithm file to implement algorithms i find interesting - basically name algos , implemented lps ,kmp , kadane , seive of eratosthenes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workanddelete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/workanddelete.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,13 +23,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/algorithms"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/algorithms&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="trial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="trial" />
+      <module name="playground_latest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.trial" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -34,6 +53,14 @@
       <option name="presentableId" value="Default" />
       <updated>1664982458402</updated>
     </task>
+    <task id="LOCAL-00001" summary="created an algorithm file to implement algorithms i find interesting - basically name algos , implemented lps ,kmp , kadane , seive of eratosthenes">
+      <created>1664985825367</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1664985825367</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -46,5 +73,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created an algorithm file to implement algorithms i find interesting - basically name algos , implemented lps ,kmp , kadane , seive of eratosthenes" />
+    <option name="LAST_COMMIT_MESSAGE" value="created an algorithm file to implement algorithms i find interesting - basically name algos , implemented lps ,kmp , kadane , seive of eratosthenes" />
   </component>
 </project>
