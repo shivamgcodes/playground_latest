@@ -214,7 +214,7 @@ public class Graph {
         boolean[] visited = new boolean[V];
         for (int i = 0; i < V; i++) {
             if (!visited[i]) {
-                dfs_topological_sort_helper(i, stack, V, adj, visited);
+                dfs_topological_sort_helper(i, stack,  adj, visited);
 
             }
         }
@@ -232,13 +232,13 @@ public class Graph {
         return topo_sort;
     }
 
-    private void dfs_topological_sort_helper(int cur, Stack<Integer> stack, int V, ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
+    private void dfs_topological_sort_helper(int cur, Stack<Integer> stack,  ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
         visited[cur] = true;
         for (int i = 0; i < adj.get(cur).size(); i++) {
 
             if (!visited[adj.get(cur).get(i)]) {
 
-                dfs_topological_sort_helper(adj.get(cur).get(i), stack, V, adj, visited);
+                dfs_topological_sort_helper(adj.get(cur).get(i), stack,  adj, visited);
             }
 
 
@@ -352,6 +352,7 @@ public class Graph {
 
     //shortest path in undirected graph having same weight can be found by using bfs
     public int[] shortestPath_to_all_nodes_using_bfs(int[][] edges, int n, int m, int src) {
+        // my implementation of lec 93
         // returns an array containing shortest possible path length to all nodes
         int[][] adj = printAdjacency(n, m, edges);
 
@@ -390,6 +391,8 @@ public class Graph {
         return steps;
 
     }
+
+
 }
    
 

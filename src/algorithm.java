@@ -114,7 +114,7 @@ public class algorithm {
     // for smallest prime factor using eratosthenes - instead of making a boolean array make a integer array and then whenev u visit it for the first
     //time (check whether it is 0 or not ) , judt set the index as the i for which the array has been visited
 
-    private int kadane(int[] arr) {
+    private int kadane(int[] arr, int arraylength) {
 
         int sum = 0;
         int max = 0;
@@ -131,7 +131,32 @@ public class algorithm {
 
         return max;
     }
+    private static int[] kadane(int[] arr) { // returns an array of sixe containing the start and end of the required subarray
 
+        int sum = 0;
+        int max = 0;
+        int start = 0 ;
+        int end = 0;
+        int curstart = 0;
+        int[] res = new int[2]; //res [0] = start , res[1] = end
+        for (int i = 0; i < arr.length; i++) {
+            sum = sum + arr[i];
+            if (sum < 0) {
+                sum = 0;
+                curstart = i+1;
+            }
+            if (sum > max) {
+                max = sum;
+                end = i;
+                start = curstart;
+            }
+        }
+
+        res[0] = start;
+        res[1] = end;
+
+        return res;
+    }
 
 }
 
