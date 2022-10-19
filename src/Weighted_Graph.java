@@ -73,8 +73,16 @@ public class Weighted_Graph {
 
 
     public int[] shortestPath_in_DAG(int N, int M, int[][] edges) {
+
+        /*explanation for the algo
+         so the reason we need a topologolical sort in finding the shortest path in DAG is , because topo ensures that every edge goes
+         left to right , but also that any node on right has its parent on left , which means that when we traverse an array left to
+        right we already have the path / edge costs to that node if possible .   It also means that any node when reached will only
+        have its shortest possible path in its index as  all the paths reaching it have already been explored - as this node ca not be
+        reached from any of the nodes after it*/
+
         //edge[i][0] to edge[i][1] with a distance of edge[i][2]
-        //Code here
+
         ArrayList<ArrayList<edge>> adjlist = adjlist_of_DAG(N, M, edges);
 
 
