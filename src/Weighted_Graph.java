@@ -1,21 +1,86 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
-class edge {
+class edge implements Comparable<edge> {
+    //primarily made for making it possible to have everything - vertex , parent and weight in the same package for priority queue and not making it anymore
+    // complex by storing arraylists
     int weight;
     int vertex;
+    int parent;
 
     public edge(int vertex, int weight) {
         this.weight = weight;
         this.vertex = vertex;
 
     }
+
+    public edge(int vertex, int weight, int parent) {
+        this.weight = weight;
+        this.vertex = vertex;
+        this.parent = parent;
+    }
+
+    @Override
+    public int compareTo(edge o) {
+        if (o.weight < this.weight) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+}
+
+class dijkstra_priority_queue_pair implements Comparable<dijkstra_priority_queue_pair> {
+    int totalweight;
+    int vertex;
+
+    dijkstra_priority_queue_pair(int totalweight, int vertex) {
+        this.totalweight = totalweight;
+        this.vertex = vertex;
+    }
+
+    @Override
+    public int compareTo(dijkstra_priority_queue_pair o) {
+        if (o.totalweight < this.totalweight) {
+            return 1;
+        }
+        if (this.totalweight < o.totalweight) {
+            return -1;
+        }
+        return 0;
+    }
 }
 
 public class Weighted_Graph {
+    private static ArrayList<ArrayList<Integer>> from_arr_of_arr_to_arrlist_of_arrlist(int[][] array) {
+
+        ArrayList<ArrayList<Integer>> arrayList = new ArrayList<>();
+
+        for (int i = 0; i < array.length; i++) {
+            ArrayList<Integer> temp = new ArrayList<>();
+            for (int j = 0; j < array[i].length; j++) {
+                temp.add(array[i][j]);
+            }
+            arrayList.add(temp);
+        }
+        return arrayList;
+    }
+    private static int[][] from_arrlist_of_arrlist_to_arr_of_arr(ArrayList<ArrayList<Integer>> arrayList) {
+        int[][] array = new int[arrayList.size()][];
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            int[] temp = new int[arrayList.get(i).size()];
+            for (int j = 0; j < arrayList.get(i).size(); j++) {
+                temp[j] = arrayList.get(i).get(j);
+
+            }
+            array[i] = temp;
+        }
+        return array;
+    }
 
     // DAG - directed acyclic graph, all methods are for weighted ones upto now
-
     public ArrayList<ArrayList<edge>> adjlist_of_DAG(int no_of_vertices, int no_of_edges, int[][] edges) {
 
         //edge[i][0] to edge[i][1] with a distance of edge[i][2]
@@ -31,7 +96,6 @@ public class Weighted_Graph {
         return arrlist; // this arr list is completly unsorted
 
     }
-
     private void dfs_topological_sort_helper_DAG(int cur, Stack<Integer> stack, ArrayList<ArrayList<edge>> adjlist, boolean[] visited) {
         visited[cur] = true;
 
@@ -43,7 +107,6 @@ public class Weighted_Graph {
         }
         stack.push(cur);
     }
-
     public ArrayList<Integer> topo_sort_DAG(int V, ArrayList<ArrayList<edge>> adjlist) {
         //i chose to return a arraylist , as now i can use the same method for checking whether the graph has a cycle or not as if the
         //arraylist sizw != V , then the graph does have cycle , otherwise an int[] will have constant size
@@ -70,8 +133,6 @@ public class Weighted_Graph {
         return topological_sort;
 
     }
-
-
     public int[] shortestPath_in_DAG(int N, int M, int[][] edges) {
 
         /*explanation for the algo
@@ -120,6 +181,31 @@ public class Weighted_Graph {
         }
         return cost; //expected one = 0 2 -1 8 10
 
+    }
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int source) {
+        //adj[i] is a list of lists containing two integers where the first integer of each list j denotes there is edge between i and j
+        // , second integers corresponds to the weight of that  edge ,
+        // at index 0 it is the vertex and at index 1 it is the edge weight
+        boolean[] finalized = new boolean[V];
+        int[] distance = new int[V];
+        PriorityQueue<dijkstra_priority_queue_pair> pq = new PriorityQueue<>();
+        pq.add(new dijkstra_priority_queue_pair(0, source));
+        while (!pq.isEmpty()) {
+
+            dijkstra_priority_queue_pair p = pq.poll();
+            if (!finalized[p.vertex]) {
+                finalized[p.vertex] = true;
+                distance[p.vertex] = p.totalweight;
+
+                for (int i = 0; i < adj.get(p.vertex).size(); i++) {
+                    dijkstra_priority_queue_pair cur = new dijkstra_priority_queue_pair(adj.get(p.vertex).get(i).get(1) + distance[p.vertex]
+                            , adj.get(p.vertex).get(i).get(0));
+                    pq.add(cur);
+                }
+            }
+        }
+
+        return distance;
     }
 }
 

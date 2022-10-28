@@ -214,7 +214,7 @@ public class Graph {
         boolean[] visited = new boolean[V];
         for (int i = 0; i < V; i++) {
             if (!visited[i]) {
-                dfs_topological_sort_helper(i, stack,  adj, visited);
+                dfs_topological_sort_helper(i, stack, adj, visited);
 
             }
         }
@@ -232,13 +232,13 @@ public class Graph {
         return topo_sort;
     }
 
-    private void dfs_topological_sort_helper(int cur, Stack<Integer> stack,  ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
+    private void dfs_topological_sort_helper(int cur, Stack<Integer> stack, ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
         visited[cur] = true;
         for (int i = 0; i < adj.get(cur).size(); i++) {
 
             if (!visited[adj.get(cur).get(i)]) {
 
-                dfs_topological_sort_helper(adj.get(cur).get(i), stack,  adj, visited);
+                dfs_topological_sort_helper(adj.get(cur).get(i), stack, adj, visited);
             }
 
 
@@ -253,8 +253,6 @@ public class Graph {
     // a - > b - > c   if we use straght up bfs then the sort will be a , b , d , c which is wrong
     //  \          /   the edge points from a to d and then from d to c
     //   d-------
-
-
     static int[] Kahns_algorithm(int V, ArrayList<ArrayList<Integer>> adj) {
         // add your code here
         // adj(1)  - > 2 , 34 ,6  - > means that vertex 1 has edges going out towards 2 , 34 , 6
@@ -392,7 +390,76 @@ public class Graph {
 
     }
 
+    public static ArrayList<ArrayList<edge>> adjlist_of_undirected_using_edges(int no_of_vertices, int no_of_edges, int[][] edgearray) {
+        // was made for prims algorithm
+// edges are used here for storing weight also in the same package in priority queue for prims algorithm
+        //edgearray[i][0] to edgearray[i][1] with a distance of edgearray[i][2]
+        ArrayList<ArrayList<edge>> arrlist = new ArrayList<>();
+        for (int i = 0; i <= no_of_vertices; i++) {
+            arrlist.add(new ArrayList<edge>());
+        }
+        for (int i = 0; i < edgearray.length; i++) {
 
+            arrlist.get(edgearray[i][0]).add(new edge(edgearray[i][1], edgearray[i][2], edgearray[i][0]));
+            // uncomment the below line if all edges are given twice - one from node to vertex and then once after reversing roles
+            arrlist.get(edgearray[i][1]).add(new edge(edgearray[i][0], edgearray[i][2], edgearray[i][1]));
+        }
+
+        return arrlist; // this arr list is completly unsorted
+
+    }
+
+    public static ArrayList<ArrayList<Integer>> prims_mst(int n, int m, ArrayList<ArrayList<edge>> adjlist) {
+//whenever , we are making a MST , there is only one possible parent of any integer , which is the integer which includes the son in the MST ,
+// as any node will get included(added to MST) only once , none of the nodes will have any more than a single node
+        int count_of_mst_nodes = 1;
+        int[] edgeweight = new int[n + 1];
+        int[] parentarray = new int[n + 1];
+        boolean[] included_in_mst = new boolean[n + 1];
+        PriorityQueue<edge> pq = new PriorityQueue<>();
+        int cur = 1;
+        included_in_mst[1] = true;
+        while (count_of_mst_nodes != n) {
+
+            for (int i = 0; i < adjlist.get(cur).size(); i++) {
+                if (!included_in_mst[adjlist.get(cur).get(i).vertex]) {
+                    if (cur == adjlist.get(cur).get(i).vertex) continue;
+                    pq.add(adjlist.get(cur).get(i));
+                }
+            }
+
+            edge least_weighted_edge = pq.poll();
+            int a = 0;
+            if (least_weighted_edge == null) {
+                System.out.println("L debugger " + pq.size() + "  " + count_of_mst_nodes + "  ");
+                a = 10;
+            }
+
+            if (!included_in_mst[least_weighted_edge.vertex]) {
+
+                int parent = least_weighted_edge.parent;
+                int weight = least_weighted_edge.weight;
+                int vertex = least_weighted_edge.vertex;
+
+                parentarray[vertex] = parent;
+                edgeweight[vertex] = weight;
+                included_in_mst[vertex] = true;
+                count_of_mst_nodes++;
+                cur = vertex;
+            }
+
+        }
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        for (int i = 2; i < n + 1; i++) {
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(parentarray[i]);
+            temp.add(i);
+            temp.add(edgeweight[i]);
+            result.add(temp);
+        }
+        return result;
+    }
 }
    
 
