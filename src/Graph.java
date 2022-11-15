@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Graph {
 
-    public static int[][] printAdjacency(int n, int m, int[][] edges) {
+    public  int[][] printAdjacency(int n, int m, int[][] edges) {
 
         // n - > number of nodes
         // m - > number of edges
@@ -34,7 +34,7 @@ public class Graph {
         return adjlist;
     }
 
-    public static ArrayList<Integer> BFS(int vertex, int edges[][]) {
+    public  ArrayList<Integer> BFS(int vertex, int edges[][]) {
 
         //ArrayList<Integer> bfs = new ArrayList<>();
 
@@ -69,7 +69,6 @@ public class Graph {
         }
         return queue;
     }
-
 
     public ArrayList<Integer> dfs(boolean[] visited, ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfslist, int cur) {
         //visited,adjlist , keep returning the latest dfs
@@ -139,7 +138,7 @@ public class Graph {
 
     public boolean undirected_cycle_detection_dfs(int V, ArrayList<ArrayList<Integer>> adj) {
 
-        //will we have to keep track of parent if we know that  a graph is completely connected
+        //will we have to keep track of parent if we know that  a graph is completely connected ???
 
         boolean[] visited = new boolean[V];
         HashMap<Integer, Integer> sonparent = new HashMap<>();
@@ -253,7 +252,7 @@ public class Graph {
     // a - > b - > c   if we use straght up bfs then the sort will be a , b , d , c which is wrong
     //  \          /   the edge points from a to d and then from d to c
     //   d-------
-    static int[] Kahns_algorithm(int V, ArrayList<ArrayList<Integer>> adj) {
+     int[] Kahns_algorithm(int V, ArrayList<ArrayList<Integer>> adj) {
         // add your code here
         // adj(1)  - > 2 , 34 ,6  - > means that vertex 1 has edges going out towards 2 , 34 , 6
 
@@ -390,7 +389,7 @@ public class Graph {
 
     }
 
-    public static ArrayList<ArrayList<edge>> adjlist_of_undirected_using_edges(int no_of_vertices, int no_of_edges, int[][] edgearray) {
+    public  ArrayList<ArrayList<edge>> adjlist_of_undirected_using_edges(int no_of_vertices, int no_of_edges, int[][] edgearray) {
         // was made for prims algorithm
 // edges are used here for storing weight also in the same package in priority queue for prims algorithm
         //edgearray[i][0] to edgearray[i][1] with a distance of edgearray[i][2]
@@ -409,7 +408,7 @@ public class Graph {
 
     }
 
-    public static ArrayList<ArrayList<Integer>> prims_mst(int n, int m, ArrayList<ArrayList<edge>> adjlist) {
+    public  ArrayList<ArrayList<Integer>> prims_mst(int n, int m, ArrayList<ArrayList<edge>> adjlist) {
 //whenever , we are making a MST , there is only one possible parent of any integer , which is the integer which includes the son in the MST ,
 // as any node will get included(added to MST) only once , none of the nodes will have any more than a single node
         int count_of_mst_nodes = 1;

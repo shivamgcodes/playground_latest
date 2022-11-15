@@ -66,6 +66,7 @@ public class Weighted_Graph {
         }
         return arrayList;
     }
+
     private static int[][] from_arrlist_of_arrlist_to_arr_of_arr(ArrayList<ArrayList<Integer>> arrayList) {
         int[][] array = new int[arrayList.size()][];
 
@@ -96,6 +97,7 @@ public class Weighted_Graph {
         return arrlist; // this arr list is completly unsorted
 
     }
+
     private void dfs_topological_sort_helper_DAG(int cur, Stack<Integer> stack, ArrayList<ArrayList<edge>> adjlist, boolean[] visited) {
         visited[cur] = true;
 
@@ -107,6 +109,7 @@ public class Weighted_Graph {
         }
         stack.push(cur);
     }
+
     public ArrayList<Integer> topo_sort_DAG(int V, ArrayList<ArrayList<edge>> adjlist) {
         //i chose to return a arraylist , as now i can use the same method for checking whether the graph has a cycle or not as if the
         //arraylist sizw != V , then the graph does have cycle , otherwise an int[] will have constant size
@@ -133,6 +136,7 @@ public class Weighted_Graph {
         return topological_sort;
 
     }
+
     public int[] shortestPath_in_DAG(int N, int M, int[][] edges) {
 
         /*explanation for the algo
@@ -182,6 +186,7 @@ public class Weighted_Graph {
         return cost; //expected one = 0 2 -1 8 10
 
     }
+
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int source) {
         //adj[i] is a list of lists containing two integers where the first integer of each list j denotes there is edge between i and j
         // , second integers corresponds to the weight of that  edge ,

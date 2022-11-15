@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3423eb67-b59b-4a64-850d-f6419a711404" name="Changes" comment="put a little comment in weighted graph">
+    <list default="true" id="3423eb67-b59b-4a64-850d-f6419a711404" name="Changes" comment="implemented dijkstra and prims algorithm. made some modifications to the edge class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Weighted_Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Weighted_Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/trial.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/algorithm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666208462493</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implemented dijkstra and prims algorithm. made some modifications to the edge class">
+      <created>1666986336129</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666986336129</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,7 +115,8 @@
     <MESSAGE value="added longest common subsequence to algorithms  , added topological sort , kahns algorithm and cycle detection using kahns algorithm in Graphs.&#10;also corrected the print adjacency list - changes it format." />
     <MESSAGE value="added a class for DAG(directed acyclic graph) implemented - adjacency list , topological sort and shortest path" />
     <MESSAGE value="put a little comment in weighted graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="put a little comment in weighted graph" />
+    <MESSAGE value="implemented dijkstra and prims algorithm. made some modifications to the edge class" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented dijkstra and prims algorithm. made some modifications to the edge class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

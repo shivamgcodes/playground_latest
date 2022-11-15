@@ -38,30 +38,30 @@ public class algorithm {
         return lps;
     }
 
-        public int longestCommonSubsequence(String text1, String text2) {
+    public int longestCommonSubsequence(String text1, String text2) {
         //dp implementation
-            int m = text1.length();
-            int n = text2.length();
+        int m = text1.length();
+        int n = text2.length();
 
-            int[][] dparr = new int[m + 1][n + 1];
+        int[][] dparr = new int[m + 1][n + 1];
 
-            int cur = 0 ;
+        int cur = 0;
 
-            for(int i = 0 ; i <= m ; i++){
-                for(int j = cur ; j <= n ; j++){
-                    if(i == 0 || j== 0){dparr[i][j] = 0;}
-                    else if (text1.charAt(i -1) == text2.charAt(j -1)) {
+        for (int i = 0; i <= m; i++) {
+            for (int j = cur; j <= n; j++) {
+                if (i == 0 || j == 0) {
+                    dparr[i][j] = 0;
+                } else if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
 
-                        dparr[i][j] = dparr[i-1][j-1] + 1;
+                    dparr[i][j] = dparr[i - 1][j - 1] + 1;
 
-                    }
-                    else{
-                        dparr[i][j] = Math.max(dparr[i-1][j] , dparr[i][j-1]);
-                    }
+                } else {
+                    dparr[i][j] = Math.max(dparr[i - 1][j], dparr[i][j - 1]);
                 }
             }
-            return dparr[m][n];
         }
+        return dparr[m][n];
+    }
 
 
     public static void kmp(String target, String pattern, int[] lsparray) {
@@ -88,6 +88,8 @@ public class algorithm {
     }
 
     public static ArrayList<Integer> seive_of_eratosthenes(int n) {
+//returns a list of primes
+
 
         // n is the max number upto which u want the seive to work , i will be putting booleans as markers
         // false ones are prime , ture ones are composite
@@ -131,11 +133,12 @@ public class algorithm {
 
         return max;
     }
+
     private static int[] kadane(int[] arr) { // returns an array of sixe containing the start and end of the required subarray
 
         int sum = 0;
         int max = 0;
-        int start = 0 ;
+        int start = 0;
         int end = 0;
         int curstart = 0;
         int[] res = new int[2]; //res [0] = start , res[1] = end
@@ -143,7 +146,7 @@ public class algorithm {
             sum = sum + arr[i];
             if (sum < 0) {
                 sum = 0;
-                curstart = i+1;
+                curstart = i + 1;
             }
             if (sum > max) {
                 max = sum;
