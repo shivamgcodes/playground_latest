@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Graph {
 
-    public  int[][] printAdjacency(int n, int m, int[][] edges) {
+    public int[][] printAdjacency(int n, int m, int[][] edges) {
 
         // n - > number of nodes
         // m - > number of edges
@@ -34,7 +34,7 @@ public class Graph {
         return adjlist;
     }
 
-    public  ArrayList<Integer> BFS(int vertex, int edges[][]) {
+    public ArrayList<Integer> BFS(int vertex, int edges[][]) {
 
         //ArrayList<Integer> bfs = new ArrayList<>();
 
@@ -252,7 +252,7 @@ public class Graph {
     // a - > b - > c   if we use straght up bfs then the sort will be a , b , d , c which is wrong
     //  \          /   the edge points from a to d and then from d to c
     //   d-------
-     int[] Kahns_algorithm(int V, ArrayList<ArrayList<Integer>> adj) {
+    int[] Kahns_algorithm(int V, ArrayList<ArrayList<Integer>> adj) {
         // add your code here
         // adj(1)  - > 2 , 34 ,6  - > means that vertex 1 has edges going out towards 2 , 34 , 6
 
@@ -389,7 +389,7 @@ public class Graph {
 
     }
 
-    public  ArrayList<ArrayList<edge>> adjlist_of_undirected_using_edges(int no_of_vertices, int no_of_edges, int[][] edgearray) {
+    public ArrayList<ArrayList<edge>> adjlist_of_undirected_using_edges(int no_of_vertices, int no_of_edges, int[][] edgearray) {
         // was made for prims algorithm
 // edges are used here for storing weight also in the same package in priority queue for prims algorithm
         //edgearray[i][0] to edgearray[i][1] with a distance of edgearray[i][2]
@@ -408,7 +408,7 @@ public class Graph {
 
     }
 
-    public  ArrayList<ArrayList<Integer>> prims_mst(int n, int m, ArrayList<ArrayList<edge>> adjlist) {
+    public ArrayList<ArrayList<Integer>> prims_mst(int n, int m, ArrayList<ArrayList<edge>> adjlist) {
 //whenever , we are making a MST , there is only one possible parent of any integer , which is the integer which includes the son in the MST ,
 // as any node will get included(added to MST) only once , none of the nodes will have any more than a single node
         int count_of_mst_nodes = 1;
@@ -459,7 +459,148 @@ public class Graph {
         }
         return result;
     }
+
+    private static void checkbridge(ArrayList<ArrayList<Integer>> adj, int[] disc, int[] low, int[] parent, boolean[] visited, int curdisc, int node, int c, int d, ArrayList<ArrayList<Integer>> bridges) {
+        visited[node] = true;
+        low[node] = Math.min(low[node], curdisc);
+        disc[node] = curdisc;
+        curdisc++;
+        int i;
+        boolean backtrack = true;
+        for (i = 0; i < adj.get(node).size(); i++) {
+
+            if (!visited[adj.get(node).get(i)]) {
+
+                backtrack = false;
+                parent[adj.get(node).get(i)] = node;
+                checkbridge(adj, disc, low, parent, visited, curdisc, adj.get(node).get(i), c, d, bridges);
+                if (low[adj.get(node).get(i)] > disc[node]) {
+                    ArrayList<Integer> ar = new ArrayList<>();
+                    ar.add(node);
+                    ar.add(adj.get(node).get(i));
+                    bridges.add(ar);
+                }
+            }
+        }
+        if (backtrack) {
+            for (int j = 0; j < adj.get(node).size(); j++) {
+                if (parent[node] != adj.get(node).get(j)) {
+                    low[node] = Math.min(low[node], disc[adj.get(node).get(j)]);
+                }
+            }
+        } else {
+            for (int j = 0; j < adj.get(node).size(); j++) {
+                if (parent[node] != adj.get(node).get(j)) {
+                    low[node] = Math.min(low[node], low[adj.get(node).get(j)]);
+                }
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> ReturnBridges(int V, ArrayList<ArrayList<Integer>> adj, int c, int d) {
+        // in bridgse arraylist , every arraylist is of size - 2 and has both the vertices of the bridge
+        // also in this algorithm i am counting discorvery a little differently
+        // for a graph have edges - > 1-2, 2-3 , 3-4, 1-5 . and lets say we start dfs from 1 and then go to 2 , then 3 and then 4 , then complete backtracking to 1 and
+        // then we visit 5 - > the discovery array will look like this- > 0 , 1 , 2 , 3 , 4 , 1 instead of - > 0, 1, 2, 3, 4, 5 , but it still works as this is a dfs
+        //also the other way (the traditional one as shown in lectures) - will need a static variable in the class or an Integer object type variable which is uselessly crumbersoe
+        int[] disc = new int[V];
+        int[] low = new int[V];
+        for (int i = 0; i < V; i++) {
+            low[i] = Integer.MAX_VALUE;
+        }
+        boolean[] visited = new boolean[V];
+        int[] parent = new int[V];
+        ArrayList<ArrayList<Integer>> bridges = new ArrayList<>();
+
+        for (int node = 0; node < V; node++) {
+            checkbridge(adj, disc, low, parent, visited, 0, node, c, d, bridges);
+        }
+        return bridges;
+    }
+
+    private static void check_articulation_point(ArrayList<ArrayList<Integer>> adj, int[] disc, int[] low, int[] parent, boolean[] visited, int curdisc, int node, boolean[] articulation_point_boolean) {
+        visited[node] = true;
+        low[node] = Math.min(low[node], curdisc);
+        disc[node] = curdisc;
+        curdisc++;
+        int i;
+        int child = 0;
+        boolean backtrack = true;
+        for (i = 0; i < adj.get(node).size(); i++) {
+
+            if (!visited[adj.get(node).get(i)]) {
+
+                backtrack = false;
+                parent[adj.get(node).get(i)] = node;
+                check_articulation_point(adj, disc, low, parent, visited, curdisc, adj.get(node).get(i), articulation_point_boolean);
+                if (low[adj.get(node).get(i)] >= disc[node]) {
+                    articulation_point_boolean[node] = true;
+
+                }
+
+                child++;
+            }
+        }
+
+
+        if (backtrack) {
+            for (int j = 0; j < adj.get(node).size(); j++) {
+                if (parent[node] != adj.get(node).get(j)) {
+                    low[node] = Math.min(low[node], disc[adj.get(node).get(j)]);
+                }
+            }
+        } else {
+            for (int j = 0; j < adj.get(node).size(); j++) {
+                if (parent[node] != adj.get(node).get(j)) {
+                    low[node] = Math.min(low[node], low[adj.get(node).get(j)]);
+                }
+            }
+        }
+        if (parent[node] == -1) {
+            if (child >= 2) {
+                articulation_point_boolean[node] = true;
+            } else {
+                articulation_point_boolean[node] = false;
+            }
+        }
+    }
+
+    public ArrayList<Integer> articulationPoints(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] disc = new int[V];
+        int[] low = new int[V];
+        int[] parent = new int[V];
+        for (int i = 0; i < V; i++) {
+            low[i] = Integer.MAX_VALUE;
+            parent[i] = -1;
+        }
+        boolean[] visited = new boolean[V];
+
+        boolean[] articulation_point_boolean = new boolean[V];
+
+
+        for (int node = 0; node < V; node++) {
+            check_articulation_point(adj, disc, low, parent, visited, 0, node, articulation_point_boolean);
+        }
+
+        ArrayList<Integer> ar = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            if (articulation_point_boolean[i]) {
+                ar.add(i);
+            }
+        }
+
+
+        if (ar.size() == 0) {
+            ar.add(-1);
+            return ar;
+        }
+        ar.sort(Comparator.naturalOrder());
+        return ar;
+
+
+    }
 }
+
    
 
 
