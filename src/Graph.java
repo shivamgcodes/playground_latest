@@ -282,8 +282,9 @@ public class Graph {
 
 
         while (arrayList.size() > 0) {
-            int cur = arrayList.get(arrayList.size() - 1);
-            arrayList.remove(arrayList.size() - 1);
+            int cur = arrayList.get(arrayList.size() - 1); // idk why the index i used is arraylist.size - 1 ,i checked on gfg with 0 , it does not matter
+            arrayList.remove(arrayList.size() - 1);// probably it was influence from the course teacher , but it works with 0 as well
+            // and acc to my manalysis it will work with any arbitary index as well
             arr[index] = cur;
             index++;
 
@@ -305,7 +306,9 @@ public class Graph {
         return arr;
     }
 
-    public boolean cycle_detection_directed_graph_using_bfs(int V, ArrayList<ArrayList<Integer>> adj) { // returns true if a cycle is present
+    public boolean cycle_detection_directed_graph_using_bfs(int V, ArrayList<ArrayList<Integer>> adj) {
+
+        // returns true if a cycle is present
         // same as lahns algortithm , the only difference is that in this algorithm if the length of the topological sort != vertices - then it is an invalid topological sort
         // ND THE REASON for that is the presence of a cycle
         int[] indegree = new int[V];
@@ -598,6 +601,52 @@ public class Graph {
         return ar;
 
 
+    }
+
+    static ArrayList<ArrayList<Integer>> reverse_graph_edges(ArrayList<ArrayList<Integer>> adj, int V) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        for (int i = 0; i < V; i++) {
+            res.add(new ArrayList<>());
+        }
+
+
+        for (int i = 0; i < adj.size(); i++) {
+
+
+            for (int j = 0; j < adj.get(i).size(); j++) {
+
+                res.get(adj.get(i).get(j)).add(i);
+            }
+
+        }
+
+        return res;
+    }
+
+    public int kosaraju(int V, ArrayList<ArrayList<Integer>> adj) {
+        //code here
+
+
+        int[] topological = topoSort(V, adj); // to go like the way we do in stack , go left to right
+        ArrayList<ArrayList<Integer>> reversed_graph = reverse_graph_edges(adj, V);
+        ArrayList<ArrayList<Integer>> scc = new ArrayList<>();// here every arraylist is a list of nodes of a scc - strongly connected component
+
+
+        boolean[] visited = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            if (!visited[topological[i]]) {
+                ArrayList<Integer> temp = new ArrayList<>();
+                //temp.add(i);
+                dfs(visited, reversed_graph, temp, topological[i]);
+                visited[topological[i]] = true;
+                scc.add(temp);
+            }
+
+        }
+
+        return scc.size();
     }
 }
 

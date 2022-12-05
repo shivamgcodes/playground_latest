@@ -212,5 +212,38 @@ public class Weighted_Graph {
 
         return distance;
     }
+    static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
+        // Write your code here
+        // assuming that no node has total distance > 100000000
+
+        int max = 100000000;
+        int[] dist = new int[V];
+        for (int i = 0; i < V; i++) {
+            dist[i] = 100000000;
+
+        }
+        dist[S] = 0;
+        for (int i = 0; i < V; i++) {
+
+            for(int j = 0 ; j < edges.size() ; j++){
+                int start = edges.get(j).get(0);
+                int end = edges.get(j).get(1);
+                int weight = edges.get(j).get(2);
+                dist[end] = Math.min(weight + dist[start] , dist[end]);
+            }
+        }
+        boolean bool = false;
+        for(int j = 0 ; j < edges.size() ; j++){
+            int start = edges.get(j).get(0);
+            int end = edges.get(j).get(1);
+            int weight = edges.get(j).get(2);
+            if(dist[start] + weight  < dist[end]){bool = true; break;}
+
+        }
+        if(bool){
+            return new int[]{-1};
+        }
+        return dist;
+    }
 }
 
