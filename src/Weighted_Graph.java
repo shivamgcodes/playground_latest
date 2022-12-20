@@ -214,7 +214,7 @@ public class Weighted_Graph {
     }
     static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
         // Write your code here
-        // assuming that no node has total distance > 100000000
+        // assuming that no node has total distance < 100000000
 
         int max = 100000000;
         int[] dist = new int[V];

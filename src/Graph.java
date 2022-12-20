@@ -1,8 +1,23 @@
 import java.lang.reflect.Array;
 import java.util.*;
+class compare_arr implements Comparator<ArrayList<Integer>>{
+    @Override
+    public int compare(ArrayList<Integer> o1, ArrayList<Integer> o2) {
+        int index = 0;
+        while(index < o1.size() &&index <  o2.size()){
 
+            if(o1.get(index) < o2.get(index)){return -1;}
+            if(o1.get(index) > o2.get(index)){return 1;}
+
+        }
+        if(o1.size()  < o2.size()){return -1;}
+        else{
+            return 1;
+        }
+    }
+}
 public class Graph {
-
+    static int TIME = 0;
     public int[][] printAdjacency(int n, int m, int[][] edges) {
 
         // n - > number of nodes
@@ -648,6 +663,61 @@ public class Graph {
 
         return scc.size();
     }
+    private void tarjan_SCC_helper(int[] disc, int[] low, boolean[] stackmember, ArrayList<ArrayList<Integer>> res, ArrayList<ArrayList<Integer>> adj, Stack<Integer> stack, int cur) {
+
+        disc[cur] = TIME;
+        low[cur] = TIME;
+        TIME++;
+        System.out.print(TIME + " ");
+        stackmember[cur] = true;
+        stack.push(cur);
+        for (int i = 0; i < adj.get(cur).size(); i++) {
+            int curchild = adj.get(cur).get(i);
+            if (disc[curchild] == -1) {
+                tarjan_SCC_helper(disc, low, stackmember, res, adj, stack, curchild);
+                low[cur] = Math.min(low[cur], low[curchild]);
+            } else if (stackmember[curchild]) {
+                low[cur] = Math.min(low[cur], disc[curchild]);
+            }
+        }
+
+        if (low[cur] == disc[cur]) {
+
+            ArrayList<Integer> temp = new ArrayList<>();
+            int st;
+            do{
+                st = stack.pop();
+                temp.add(st);
+                stackmember[st] = false;
+            }
+            while (st != cur);
+
+            temp.sort(Comparator.naturalOrder());
+            res.add(temp);
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> tarjans_for_SCC(int V, ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        int[] disc = new int[V];
+        int[] low = new int[V];
+        boolean[] stackmember = new boolean[V];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < V; i++) {
+            disc[i] = -1;
+            low[i] = -1;
+        }
+        for (int i = 0; i < V; i++) {
+            if (disc[i] == -1) {
+                tarjan_SCC_helper(disc, low, stackmember, res, adj, stack, i);
+            }
+        }
+        res.sort(new compare_arr());
+        return res;
+    }
+
 }
 
    
